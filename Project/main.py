@@ -93,9 +93,16 @@ def getEdges(slides):
             edgeMatrix[i][j] = interest(slides[i], slides[j])
     return edgeMatrix
 
+def submitAnswer(slideshow):
+    l = str(len(slideshow))
+    answers = [s[0][1]for s in slideshow]
+    out = "\n".join([l]+answers)
+    return out
+
 
 def main():
-    datasetPath = os.path.join(DatasetFolder, "b_lovely_landscapes.txt")
+    b = "b_lovely_landscapes.txt"
+    datasetPath = os.path.join(DatasetFolder, "a_example.txt")
     [hpictures, vpictures] = parse(datasetPath)
     #pprint(hpictures)
     #pprint(vpictures)
@@ -107,17 +114,24 @@ def main():
     max = -1
     best = slideshow
     l = len(slideshow)
-    for i in range(100):
+    for i in range(10):
         newSlideShow = random.sample(slideshow, l)
         new = totalInterest(newSlideShow)
-        print(str(new)+":"+str(max))
+        #print(str(new)+":"+str(max))
         #pprint(newSlideShow)
         if new > max:
             max = new
             best = newSlideShow
 
-    print("Best")
-    print(str(max))
+    #print("Best")
+    #print(str(max))
+
+    #print("-"*60)
+    out = submitAnswer(best)
+    print(out)
+
+    #with open("out.txt","w") as f:
+    #    f.write(out)
     #pprint(best)
 
 
