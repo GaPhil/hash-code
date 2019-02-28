@@ -29,10 +29,21 @@ def parse(fname):
 
     return pictures
 
+def createSlide(*args):
+    l = len(args)
+    if l == 2:
+        return [args[0],args[1]]
+    elif l == 1:
+        return [args[0]]
+    else:
+        return None
+
 def main():
     datasetPath = os.path.join(DatasetFolder,"a_example.txt")
     pictures = parse(datasetPath)
     pprint(pictures)
+    pprint(createSlide(["H","sun"]))
+    pprint(createSlide(["V", "sun"],["V", "beach"]))
 
 if __name__ == "__main__":
     main()
