@@ -17,15 +17,17 @@ def parse(fname):
 
     vpictures = []
     hpictures = []
-    for line in lines:
+    for i in range(0,len(lines)):
+        line = lines[i]
         picture = ["-"]
         line = line.split(" ")
-        picture[0] = line[0]  # Orientation
+        picture[0] = str(i)  # Line number
+        orientation = line[0]
         line = line[2:]
         for tag in line:
             picture.append(tag.strip())
-        if (picture[0] == "H"):
-            if (line[1] == "0"):
+        if (orientation == "H"):
+            if (line[1] == "0"):#skip
                 continue
             hpictures.append(picture)
         else:
@@ -33,16 +35,13 @@ def parse(fname):
 
     return [hpictures, vpictures]
 
-
 def createAllSlides(hpictures, vpictures):
-    slideShow = []
-    for pic in hpictures:
-        slideShow.append(pic)
-    for i in range(0, len(vpictures), 2):
-        slideShow.append([vpictures[i], vpictures[i + 1]])
+    slideShow = hpictures
+    for i in range(0, len(vpictures), 2):#TODO: Randomize
+        slideShow.append([vpictures[i][0] + " " + vpictures[i + 1][0]]+vpictures[i][1:] + vpictures[i + 1][1:])
     return slideShow
 
-
+'''
 def createSlide(*args):
     # Const
     l = len(args)
@@ -52,7 +51,7 @@ def createSlide(*args):
         return [args[0], args[1]]
     else:
         return None
-
+'''
 
 def interest(slide1, slide2):
     # n^2
@@ -80,8 +79,6 @@ def main():
     [hpictures, vpictures] = parse(datasetPath)
     pprint(hpictures)
     pprint(vpictures)
-    pprint(createSlide(["H", "sun"]))
-    pprint(createSlide(["V", "sun"], ["V", "beach"]))
     print(createAllSlides(hpictures, vpictures))
 
     print(interest(hpictures[0], hpictures[1]))
