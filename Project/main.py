@@ -69,12 +69,11 @@ def interest(slide1, slide2):
 
 
 def getEdges(slides):
-    edges = []
-    numSlides = len(slides)
-    for i in range(numSlides):
-        for j in range(i + 1, numSlides):
-            edges.append([i, j, interest(slides[0], slides[1])])
-    return edges
+    edgeMatrix = [[0 for i in range(len(slides))] for j in range(len(slides))]
+    for i in range(len(slides)):
+        for j in range(len(slides)):
+            edgeMatrix[i][j] = interest(slides[i], slides[j])
+    return edgeMatrix
 
 
 def main():
@@ -87,6 +86,7 @@ def main():
     print(createAllSlides(hpictures, vpictures))
 
     print(interest(hpictures[0], hpictures[1]))
+    print(getEdges(createAllSlides(hpictures, vpictures)))
 
 
 if __name__ == "__main__":
