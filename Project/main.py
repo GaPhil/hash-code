@@ -40,7 +40,6 @@ def createAllSlides(hpictures, vpictures):
         slideShow.append(pic)
     for i in range(0, len(vpictures), 2):
         slideShow.append([vpictures[i], vpictures[i + 1]])
-        slideShow.append(pic)
     return slideShow
 
 
