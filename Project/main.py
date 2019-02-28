@@ -17,7 +17,7 @@ def parse(fname):
 
     vpictures = []
     hpictures = []
-    for i in range(0,len(lines)):
+    for i in range(0, len(lines)):
         line = lines[i]
         picture = ["-"]
         line = line.split(" ")
@@ -27,7 +27,7 @@ def parse(fname):
         for tag in line:
             picture.append(tag.strip())
         if (orientation == "H"):
-            if (line[1] == "0"):#skip
+            if (line[1] == "0"):  # skip
                 continue
             hpictures.append(picture)
         else:
@@ -35,11 +35,13 @@ def parse(fname):
 
     return [hpictures, vpictures]
 
+
 def createAllSlides(hpictures, vpictures):
     slideShow = hpictures
-    for i in range(0, len(vpictures), 2):#TODO: Randomize
-        slideShow.append([vpictures[i][0] + " " + vpictures[i + 1][0]]+vpictures[i][1:] + vpictures[i + 1][1:])
+    for i in range(0, len(vpictures), 2):  # TODO: Randomize
+        slideShow.append([vpictures[i][0] + " " + vpictures[i + 1][0]] + vpictures[i][1:] + vpictures[i + 1][1:])
     return slideShow
+
 
 '''
 def createSlide(*args):
@@ -52,6 +54,22 @@ def createSlide(*args):
     else:
         return None
 '''
+
+
+def totalInterest(slideShow):
+    total = 0
+    for i in range(0, len(slideShow) - 1, 1):
+        total += interest(slideShow[i], slideShow[i + 1])
+    return total
+
+
+# def totalInterest(matrix):
+#     total = 0
+#     for i in range(len(matrix)):
+#         for j in range(len(matrix[i])):
+#             if i < j:
+#                 total += matrix[i][j]
+#     return total
 
 def interest(slide1, slide2):
     # n^2
