@@ -15,7 +15,8 @@ def parse(fname):
     # Skip first line
     lines = lines[1:]
 
-    pictures = []
+    vpictures = []
+    hpictures = []
     for line in lines:
         picture = ["-"]
         line = line.split(" ")
@@ -25,9 +26,12 @@ def parse(fname):
         line = line[2:]
         for tag in line:
             picture.append(tag.strip())
-        pictures.append(picture)
+        if (picture[0] == "H"):
+            hpictures.append(picture)
+        else:
+            vpictures.append(picture)
 
-    return pictures
+    return [hpictures,vpictures]
 
 def createSlide(*args):
     l = len(args)
@@ -54,12 +58,13 @@ def interest(slide1, slide2):
 
 def main():
     datasetPath = os.path.join(DatasetFolder, "a_example.txt")
-    pictures = parse(datasetPath)
-    pprint(pictures)
+    [hpictures,vpictures] = parse(datasetPath)
+    pprint(hpictures)
+    pprint(vpictures)
     pprint(createSlide(["H","sun"]))
     pprint(createSlide(["V", "sun"],["V", "beach"]))
 
-    print(interest(pictures[1], pictures[2]))
+    print(interest(hpictures[0], hpictures[1]))
 
 if __name__ == "__main__":
     main()
