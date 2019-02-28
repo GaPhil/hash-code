@@ -31,7 +31,18 @@ def parse(fname):
         else:
             vpictures.append(picture)
 
-    return [hpictures,vpictures]
+    return [hpictures, vpictures]
+
+
+def createAllSlides(hpictures, vpictures):
+    slideShow = []
+    for pic in hpictures:
+        slideShow.append(pic)
+    for i in range(0, len(vpictures), 2):
+        slideShow.append([vpictures[i], vpictures[i + 1]])
+        slideShow.append(pic)
+    return slideShow
+
 
 def createSlide(*args):
     # Const
@@ -39,9 +50,10 @@ def createSlide(*args):
     if l == 1:
         return [args[0]]
     elif l == 2 and args[0][0] == "V" and args[1][0] == "V":
-        return [args[0],args[1]]
+        return [args[0], args[1]]
     else:
         return None
+
 
 def interest(slide1, slide2):
     # n^2
@@ -65,13 +77,15 @@ def getEdges(slides):
 
 def main():
     datasetPath = os.path.join(DatasetFolder, "a_example.txt")
-    [hpictures,vpictures] = parse(datasetPath)
+    [hpictures, vpictures] = parse(datasetPath)
     pprint(hpictures)
     pprint(vpictures)
-    pprint(createSlide(["H","sun"]))
-    pprint(createSlide(["V", "sun"],["V", "beach"]))
+    pprint(createSlide(["H", "sun"]))
+    pprint(createSlide(["V", "sun"], ["V", "beach"]))
+    print(createAllSlides(hpictures, vpictures))
 
     print(interest(hpictures[0], hpictures[1]))
+
 
 if __name__ == "__main__":
     main()
