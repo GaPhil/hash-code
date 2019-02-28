@@ -21,7 +21,7 @@ def parse(fname):
         line = lines[i]
         picture = ["-"]
         line = line.split(" ")
-        picture[0] = str(i)  # Line number
+        picture[0] = i  # Line number
         orientation = line[0]
         line = line[2:]
         for tag in line:
@@ -29,6 +29,7 @@ def parse(fname):
         if (orientation == "H"):
             if (line[1] == "0"):#skip
                 continue
+            picture[0] = [picture[0],str(picture[0])]
             hpictures.append(picture)
         else:
             vpictures.append(picture)
@@ -38,7 +39,8 @@ def parse(fname):
 def createAllSlides(hpictures, vpictures):
     slideShow = hpictures
     for i in range(0, len(vpictures), 2):#TODO: Randomize
-        slideShow.append([vpictures[i][0] + " " + vpictures[i + 1][0]]+vpictures[i][1:] + vpictures[i + 1][1:])
+        tags = list(set(vpictures[i][1:]).union(set(vpictures[i + 1][1:])))
+        slideShow.append([[vpictures[i][0],str(vpictures[i][0]) + " " + str(vpictures[i + 1][0])]]+tags)
     return slideShow
 
 '''
