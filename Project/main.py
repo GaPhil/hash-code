@@ -42,7 +42,6 @@ def interest(slide1, slide2):
     # n^2
     common = 0
     slide1notslide2 = 0
-    slide2notslide1 = 0
     for tag in slide1:
         if tag in slide2:
             common += 1
