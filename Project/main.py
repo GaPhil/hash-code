@@ -23,11 +23,12 @@ def parse(fname):
         line = line.split(" ")
         picture[0] = i  # Line number
         orientation = line[0]
+        numTags = line[1]
         line = line[2:]
         for tag in line:
             picture.append(tag.strip())
         if (orientation == "H"):
-            if (line[1] == "0"):  # skip
+            if (numTags == "0"):  # skip
                 continue
             picture[0] = [picture[0], str(picture[0])]
             hpictures.append(picture)
@@ -39,23 +40,11 @@ def parse(fname):
 
 def createAllSlides(hpictures, vpictures):
     slideShow = hpictures
+    random.sample(vpictures, len(vpictures))
     for i in range(0, len(vpictures), 2):  # TODO: Randomize
         tags = list(set(vpictures[i][1:]).union(set(vpictures[i + 1][1:])))
         slideShow.append([[vpictures[i][0], str(vpictures[i][0]) + " " + str(vpictures[i + 1][0])]] + tags)
     return slideShow
-
-
-'''
-def createSlide(*args):
-    # Const
-    l = len(args)
-    if l == 1:
-        return [args[0]]
-    elif l == 2 and args[0][0] == "V" and args[1][0] == "V":
-        return [args[0], args[1]]
-    else:
-        return None
-'''
 
 
 def totalInterest(slideShow):
@@ -64,14 +53,6 @@ def totalInterest(slideShow):
         total += interest(slideShow[i], slideShow[i + 1])
     return total
 
-
-# def totalInterest(matrix):
-#     total = 0
-#     for i in range(len(matrix)):
-#         for j in range(len(matrix[i])):
-#             if i < j:
-#                 total += matrix[i][j]
-#     return total
 
 def interest(slide1, slide2):
     # n^2
@@ -107,37 +88,26 @@ def main():
     c = "c_memorable_moments.txt"
     d = "d_pet_pictures.txt"
     e = "e_shiny_selfies.txt"
-    datasetPath = os.path.join(DatasetFolder, b)
+    datasetPath = os.path.join(DatasetFolder, e)
     [hpictures, vpictures] = parse(datasetPath)
-    # pprint(hpictures)
-    # pprint(vpictures)
     slideshow = createAllSlides(hpictures, vpictures)
-
-    # print(interest(hpictures[0], hpictures[1]))
-    # print(getEdges(createAllSlides(hpictures, vpictures)))
 
     max = -1
     best = slideshow
     l = len(slideshow)
-    for i in range(50):
+    for i in range(10):
+        slideshow = createAllSlides(hpictures, vpictures)
         newSlideShow = random.sample(slideshow, l)
         new = totalInterest(newSlideShow)
-        # print(str(new)+":"+str(max))
-        # pprint(newSlideShow)
         if new > max:
             max = new
             best = newSlideShow
-
-            # print("Best")
-            # print(str(max))
-
-            # print("-"*60)
+        print(max)
     out = submitAnswer(best)
     print(out)
 
     with open("out.txt", "w") as f:
         f.write(out)
-        # pprint(best)
 
 
 if __name__ == "__main__":
