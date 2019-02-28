@@ -21,12 +21,12 @@ def parse(fname):
         picture = ["-"]
         line = line.split(" ")
         picture[0] = line[0]  # Orientation
-        if line[1] == "0":
-            return picture
         line = line[2:]
         for tag in line:
             picture.append(tag.strip())
         if (picture[0] == "H"):
+            if(line[1] == "0"):
+                continue
             hpictures.append(picture)
         else:
             vpictures.append(picture)
@@ -34,6 +34,7 @@ def parse(fname):
     return [hpictures,vpictures]
 
 def createSlide(*args):
+    # Const
     l = len(args)
     if l == 1:
         return [args[0]]
@@ -54,6 +55,13 @@ def interest(slide1, slide2):
     slide2notslide1 = len(slide2) - common
     return min(common, slide1notslide2, slide2notslide1)
 
+def getEdges(slides):
+    edges = []
+    numSlides = len(slides)
+    for i in range(numSlides):
+        for j in range(i+1,numSlides):
+            edges.append([i,j,interest(slides[0],slides[1])])
+    return edges
 
 def main():
     datasetPath = os.path.join(DatasetFolder, "a_example.txt")
