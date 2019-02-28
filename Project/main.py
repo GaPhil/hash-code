@@ -1,4 +1,4 @@
-import os,random
+import os, random
 
 from pprint import pprint
 
@@ -29,7 +29,7 @@ def parse(fname):
         if (orientation == "H"):
             if (line[1] == "0"):  # skip
                 continue
-            picture[0] = [picture[0],str(picture[0])]
+            picture[0] = [picture[0], str(picture[0])]
             hpictures.append(picture)
         else:
             vpictures.append(picture)
@@ -39,9 +39,9 @@ def parse(fname):
 
 def createAllSlides(hpictures, vpictures):
     slideShow = hpictures
-    for i in range(0, len(vpictures), 2):#TODO: Randomize
+    for i in range(0, len(vpictures), 2):  # TODO: Randomize
         tags = list(set(vpictures[i][1:]).union(set(vpictures[i + 1][1:])))
-        slideShow.append([[vpictures[i][0],str(vpictures[i][0]) + " " + str(vpictures[i + 1][0])]]+tags)
+        slideShow.append([[vpictures[i][0], str(vpictures[i][0]) + " " + str(vpictures[i + 1][0])]] + tags)
     return slideShow
 
 
@@ -93,46 +93,51 @@ def getEdges(slides):
             edgeMatrix[i][j] = interest(slides[i], slides[j])
     return edgeMatrix
 
+
 def submitAnswer(slideshow):
     l = str(len(slideshow))
-    answers = [s[0][1]for s in slideshow]
-    out = "\n".join([l]+answers)
+    answers = [s[0][1] for s in slideshow]
+    out = "\n".join([l] + answers)
     return out
 
 
 def main():
+    a = "a_example.txt"
     b = "b_lovely_landscapes.txt"
-    datasetPath = os.path.join(DatasetFolder, "a_example.txt")
+    c = "c_memorable_moments.txt"
+    d = "d_pet_pictures.txt"
+    e = "e_shiny_selfies.txt"
+    datasetPath = os.path.join(DatasetFolder, b)
     [hpictures, vpictures] = parse(datasetPath)
-    #pprint(hpictures)
-    #pprint(vpictures)
+    # pprint(hpictures)
+    # pprint(vpictures)
     slideshow = createAllSlides(hpictures, vpictures)
 
-    #print(interest(hpictures[0], hpictures[1]))
-    #print(getEdges(createAllSlides(hpictures, vpictures)))
+    # print(interest(hpictures[0], hpictures[1]))
+    # print(getEdges(createAllSlides(hpictures, vpictures)))
 
     max = -1
     best = slideshow
     l = len(slideshow)
-    for i in range(10):
+    for i in range(50):
         newSlideShow = random.sample(slideshow, l)
         new = totalInterest(newSlideShow)
-        #print(str(new)+":"+str(max))
-        #pprint(newSlideShow)
+        # print(str(new)+":"+str(max))
+        # pprint(newSlideShow)
         if new > max:
             max = new
             best = newSlideShow
 
-    #print("Best")
-    #print(str(max))
+            # print("Best")
+            # print(str(max))
 
-    #print("-"*60)
+            # print("-"*60)
     out = submitAnswer(best)
     print(out)
 
-    #with open("out.txt","w") as f:
-    #    f.write(out)
-    #pprint(best)
+    with open("out.txt", "w") as f:
+        f.write(out)
+        # pprint(best)
 
 
 if __name__ == "__main__":
