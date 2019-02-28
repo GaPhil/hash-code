@@ -35,10 +35,10 @@ def parse(fname):
 
 def createSlide(*args):
     l = len(args)
-    if l == 2 and args[0][0] == "V" and args[1][0] == "V":
-        return [args[0],args[1]]
-    elif l == 1:
+    if l == 1:
         return [args[0]]
+    elif l == 2 and args[0][0] == "V" and args[1][0] == "V":
+        return [args[0],args[1]]
     else:
         return None
 
