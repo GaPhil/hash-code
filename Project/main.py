@@ -1,4 +1,4 @@
-import os
+import os,random
 
 from pprint import pprint
 
@@ -95,14 +95,30 @@ def getEdges(slides):
 
 
 def main():
-    datasetPath = os.path.join(DatasetFolder, "a_example.txt")
+    datasetPath = os.path.join(DatasetFolder, "b_lovely_landscapes.txt")
     [hpictures, vpictures] = parse(datasetPath)
-    pprint(hpictures)
-    pprint(vpictures)
-    print(createAllSlides(hpictures, vpictures))
+    #pprint(hpictures)
+    #pprint(vpictures)
+    slideshow = createAllSlides(hpictures, vpictures)
 
-    print(interest(hpictures[0], hpictures[1]))
-    print(getEdges(createAllSlides(hpictures, vpictures)))
+    #print(interest(hpictures[0], hpictures[1]))
+    #print(getEdges(createAllSlides(hpictures, vpictures)))
+
+    max = -1
+    best = slideshow
+    l = len(slideshow)
+    for i in range(100):
+        newSlideShow = random.sample(slideshow, l)
+        new = totalInterest(newSlideShow)
+        print(str(new)+":"+str(max))
+        #pprint(newSlideShow)
+        if new > max:
+            max = new
+            best = newSlideShow
+
+    print("Best")
+    print(str(max))
+    #pprint(best)
 
 
 if __name__ == "__main__":
