@@ -35,7 +35,7 @@ def parse(fname):
 
 def createSlide(*args):
     l = len(args)
-    if l == 2:
+    if l == 2 and args[0][0] == "V" and args[1][0] == "V":
         return [args[0],args[1]]
     elif l == 1:
         return [args[0]]
@@ -46,7 +46,6 @@ def interest(slide1, slide2):
     # n^2
     common = 0
     slide1notslide2 = 0
-    slide2notslide1 = 0
     for tag in slide1:
         if tag in slide2:
             common += 1
